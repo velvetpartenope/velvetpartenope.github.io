@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velvet Partenope - Official Store</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        velvetRed: '#990000',
+                        velvetDarkRed: '#660000',
+                        velvetGold: '#C5A059',
+                        velvetLightGold: '#E5C585',
+                        velvetDark: '#0D0D0D',
+                        velvetGray: '#FAFAFA',
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+        h1, h2, h3, .font-serif { font-family: 'Cormorant Garamond', serif; }
+    </style>
+</head>
+<body class="bg-white text-velvetDark antialiased selection:bg-velvetRed selection:text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-velvetDark via-velvetRed to-velvetDark text-white text-xs py-2.5 px-4 text-center font-medium tracking-wide border-b border-velvetGold/30 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+        <span class="flex items-center gap-1.5"><i class="fa-regular fa-comments text-velvetLightGold"></i> Scrivici sui social per info, disponibilità e ordini!</span>
+        <div class="flex items-center gap-3">
+            <a href="https://www.instagram.com/velvet.partenope?stkn=bHo3bnl4YndsMTVp" target="_blank" class="hover:text-velvetLightGold transition-colors underline underline-offset-4 inline-flex items-center gap-1">
+                <i class="fa-brands fa-instagram"></i> Instagram
+            </a>
+            <span>•</span>
+            <a href="https://www.tiktok.com/@veltet_partenope?_r=1&_t=ZN-99knMh6gmyV" target="_blank" class="hover:text-velvetLightGold transition-colors underline underline-offset-4 inline-flex items-center gap-1">
+                <i class="fa-brands fa-tiktok"></i> TikTok
+            </a>
+        </div>
+    </div>
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-velvetGold/25">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-28 sm:h-36">
+                
+                <button onclick="toggleMobileMenu()" class="lg:hidden text-gray-800 hover:text-velvetRed focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="flex items-center gap-3 group py-1">
+                        <img src="logo-Photoroom (1).png" alt="Velvet Partenope Logo" class="h-24 sm:h-32 w-auto object-contain" onerror="this.src='https://placehold.co/150x60?text=Velvet+Partenope'">
+                    </a>
+                </div>
+
+                <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                    <a href="#catalogo" onclick="filterCategory('tutti')" class="text-gray-800 hover:text-velvetRed transition-colors pb-1 border-b-2 border-transparent hover:border-velvetGold">NOVITÀ</a>
+                    <a href="#catalogo" onclick="filterCategory('viso')" class="text-gray-800 hover:text-velvetRed transition-colors pb-1 border-b-2 border-transparent hover:border-velvetGold">VISO</a>
+                    <a href="#catalogo" onclick="filterCategory('occhi')" class="text-gray-800 hover:text-velvetRed transition-colors pb-1 border-b-2 border-transparent hover:border-velvetGold">OCCHI</a>
+                    <a href="#catalogo" onclick="filterCategory('labbra')" class="text-gray-800 hover:text-velvetRed transition-colors pb-1 border-b-2 border-transparent hover:border-velvetGold">LABBRA</a>
+                    <a href="#catalogo" onclick="filterCategory('trousse')" class="text-gray-800 hover:text-velvetRed transition-colors pb-1 border-b-2 border-transparent hover:border-velvetGold">TROUSSE & KIT</a>
+                </nav>
+
+                <div class="flex items-center space-x-2 sm:space-x-3">
+                    <button onclick="toggleSearch()" class="text-gray-800 hover:text-velvetGold transition-colors p-2">
+                        <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                    </button>
+                    <a href="https://www.instagram.com/velvet.partenope?stkn=bHo3bnl4YndsMTVp" target="_blank" class="hidden xl:inline-flex items-center gap-1.5 bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white px-3.5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md">
+                        <i class="fa-brands fa-instagram text-base"></i> IG
+                    </a>
+                    <a href="https://www.tiktok.com/@veltet_partenope?_r=1&_t=ZN-99knMh6gmyV" target="_blank" class="hidden xl:inline-flex items-center gap-1.5 bg-black text-white px-3.5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md border border-velvetGold/40">
+                        <i class="fa-brands fa-tiktok text-base"></i> TikTok
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="search-bar-container" class="hidden bg-velvetGray border-t border-velvetGold/30 px-4 py-3">
+            <div class="max-w-xl mx-auto flex items-center">
+                <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Cerca un prodotto..." class="w-full bg-white border border-velvetGold/50 rounded-l-md px-4 py-2 text-sm focus:outline-none focus:border-velvetRed">
+                <button class="bg-velvetRed text-white px-5 py-2 rounded-r-md text-sm font-semibold border border-velvetRed">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-velvetDark via-velvetDarkRed to-black text-white overflow-hidden border-b-2 border-velvetGold">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 flex flex-col lg:flex-row items-center justify-between">
+            <div class="flex flex-col items-start justify-center max-w-2xl z-10">
+                <span class="bg-velvetGold/20 border border-velvetGold text-velvetLightGold text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest mb-4 shadow">Collezione Esclusiva</span>
+                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-6">
+                    L'Eleganza <span class="text-velvetGold italic">Vellutata</span> del Make-Up
+                </h1>
+                <p class="text-gray-200 text-base sm:text-lg max-w-lg mb-8 font-light leading-relaxed">
+                    Esprimi la tua unicità con texture pregiate, colori vibranti e formulazioni d'eccellenza.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                    <a href="#catalogo" class="bg-velvetRed hover:bg-velvetDarkRed text-white font-medium px-8 py-3.5 rounded text-center transition-all tracking-wider shadow-lg border border-velvetGold/50">
+                        SCOPRI LA COLLEZIONE
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <main id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center max-w-xl mx-auto mb-12">
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold tracking-tight mb-3 text-velvetDark">I Nostri Must-Have</h2>
+            <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-velvetGold to-transparent mx-auto mb-4"></div>
+            <p class="text-gray-600 text-sm">Scopri i prodotti iconici e contattaci sui social per acquistarli.</p>
+        </div>
+
+        <div class="flex items-center justify-center flex-wrap gap-2 sm:gap-4 mb-12">
+            <button onclick="filterCategory('tutti')" id="btn-tutti" class="category-btn px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-velvetRed text-white transition-all shadow-md border border-velvetGold">Tutti</button>
+            <button onclick="filterCategory('viso')" id="btn-viso" class="category-btn px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-velvetGray text-gray-800 hover:bg-gray-200 transition-all border border-gray-200">Viso</button>
+            <button onclick="filterCategory('occhi')" id="btn-occhi" class="category-btn px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-velvetGray text-gray-800 hover:bg-gray-200 transition-all border border-gray-200">Occhi</button>
+            <button onclick="filterCategory('labbra')" id="btn-labbra" class="category-btn px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-velvetGray text-gray-800 hover:bg-gray-200 transition-all border border-gray-200">Labbra</button>
+            <button onclick="filterCategory('trousse')" id="btn-trousse" class="category-btn px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-velvetGray text-gray-800 hover:bg-gray-200 transition-all border border-gray-200">Trousse & Kit</button>
+        </div>
+
+        <!-- Loader -->
+        <div id="loading-spinner" class="text-center py-16 text-gray-400">
+            <i class="fa-solid fa-spinner fa-spin text-3xl text-velvetGold mb-2"></i>
+            <p class="text-xs uppercase tracking-widest">Caricamento prodotti in corso...</p>
+        </div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-velvetDark text-gray-400 py-10 border-t border-velvetGold/20 text-center text-xs">
+        <div class="max-w-7xl mx-auto px-4 space-y-4">
+            <p class="font-serif text-velvetGold text-lg tracking-widest uppercase">Velvet Partenope</p>
+            <p>© 2026 Velvet Partenope - Collezione Espositiva Make-Up.</p>
+        </div>
+    </footer>
+
+    <!-- Modal Dettaglio -->
+    <div id="product-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="closeProductModal()"></div>
+        <div class="min-h-screen px-4 text-center flex items-center justify-center">
+            <div class="inline-block w-full max-w-4xl bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all my-8 relative border-2 border-velvetGold/40">
+                <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 bg-gray-100 hover:bg-velvetRed hover:text-white text-gray-700 w-10 h-10 rounded-full flex items-center justify-center transition-colors shadow">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div id="modal-content" class="grid grid-cols-1 md:grid-cols-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Script & Logica Tempo Reale -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCwnKJVfJQN6HwbA90uxHd7OI04pKw_AMA",
+            authDomain: "velvetpartenope-d24bf.firebaseapp.com",
+            projectId: "velvetpartenope-d24bf",
+            storageBucket: "velvetpartenope-d24bf.firebasestorage.app",
+            messagingSenderId: "244982903425",
+            appId: "1:244982903425:web:fa110dc59b9a8c05e79380"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let products = [];
+        let currentFilter = 'tutti';
+        let searchQuery = '';
+
+        // Ascolto in TEMPO REALE del database Firestore (onSnapshot)
+        function listenToProducts() {
+            const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+            
+            onSnapshot(q, (snapshot) => {
+                products = [];
+                snapshot.forEach((doc) => {
+                    products.push({ id: doc.id, ...doc.data() });
+                });
+                
+                const spinner = document.getElementById('loading-spinner');
+                if (spinner) spinner.style.display = 'none';
+                
+                renderProducts();
+            }, (error) => {
+                console.error("Errore connessione in tempo reale:", error);
+                const spinner = document.getElementById('loading-spinner');
+                if (spinner) {
+                    spinner.innerHTML = `<p class="text-red-500 text-sm">Impossibile collegarsi al database in tempo reale.</p>`;
+                }
+            });
+        }
+
+        window.renderProducts = function() {
+            const grid = document.getElementById('product-grid');
+            let filtered = products.filter(p => {
+                const matchesCategory = currentFilter === 'tutti' || p.category === currentFilter;
+                const matchesSearch = (p.name || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      (p.description || '').toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-16 text-gray-500">Nessun prodotto disponibile in questa categoria.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="group bg-white rounded-xl border border-velvetGold/30 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden bg-velvetGray aspect-square cursor-pointer" onclick="openProductModal('${p.id}')">
+                            <img src="${p.image}" alt="${p.name}" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x400?text=Immagine+Non+Disponibile'">
+                            <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-velvetDark border border-velvetGold/50 text-[10px] font-bold px-2.5 py-1 uppercase tracking-widest rounded shadow-sm">
+                                ${p.category}
+                            </span>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center space-x-1 text-velvetGold text-xs mb-1">
+                                <i class="fa-solid fa-star"></i>
+                                <span class="text-gray-700 font-semibold">${p.rating || 5.0}</span>
+                            </div>
+                            <h3 onclick="openProductModal('${p.id}')" class="font-serif text-lg font-bold text-gray-900 group-hover:text-velvetRed transition-colors cursor-pointer mb-2">
+                                ${p.name}
+                            </h3>
+                            <p class="text-gray-500 text-xs line-clamp-2 mb-4">${p.description}</p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 flex items-center justify-between border-t border-gray-100 mt-2 pt-3">
+                        <span class="font-serif text-xl font-bold text-velvetDark">€ ${parseFloat(p.price || 0).toFixed(2)}</span>
+                        <button onclick="openProductModal('${p.id}')" class="text-xs bg-velvetGray hover:bg-velvetRed hover:text-white text-gray-800 font-semibold uppercase px-4 py-2 rounded transition-colors border border-velvetGold/30">
+                            Dettagli
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.filterCategory = function(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('bg-velvetRed', 'text-white', 'border-velvetGold');
+                btn.classList.add('bg-velvetGray', 'text-gray-800', 'border-gray-200');
+            });
+            const activeBtn = document.getElementById(`btn-${cat}`);
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-velvetGray', 'text-gray-800', 'border-gray-200');
+                activeBtn.classList.add('bg-velvetRed', 'text-white', 'border-velvetGold');
+            }
+            renderProducts();
+        }
+
+        window.toggleSearch = function() {
+            const bar = document.getElementById('search-bar-container');
+            bar.classList.toggle('hidden');
+            if(!bar.classList.contains('hidden')) document.getElementById('search-input').focus();
+        }
+
+        window.handleSearch = function(val) {
+            searchQuery = val;
+            renderProducts();
+        }
+
+        window.toggleMobileMenu = function() { document.getElementById('mobile-menu')?.classList.toggle('hidden'); }
+
+        window.openProductModal = function(productId) {
+            const product = products.find(p => p.id === productId);
+            if(!product) return;
+
+            document.getElementById('modal-content').innerHTML = `
+                <div class="bg-velvetGray p-6 flex items-center justify-center border-r border-velvetGold/20 relative">
+                    <img src="${product.image}" alt="${product.name}" class="rounded-xl object-cover max-h-96 shadow-lg border border-velvetGold/40">
+                </div>
+                <div class="p-8 flex flex-col justify-between bg-white">
+                    <div>
+                        <span class="text-xs font-bold text-velvetGold uppercase tracking-widest bg-velvetDark px-2.5 py-1 rounded">${product.category}</span>
+                        <h2 class="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mt-2 mb-2">${product.name}</h2>
+                        <div class="font-serif text-2xl font-bold text-velvetDark mb-4">€ ${parseFloat(product.price || 0).toFixed(2)}</div>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-6">${product.description}</p>
+                    </div>
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <span class="text-xs text-gray-500 font-medium">Interessato/a a questo prodotto?</span>
+                        <a href="https://www.instagram.com/velvet.partenope?stkn=bHo3bnl4YndsMTVp" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-pink-600 hover:underline uppercase tracking-wider">
+                            <i class="fa-brands fa-instagram text-base"></i> Scrivici su IG
+                        </a>
+                    </div>
+                </div>
+            `;
+            document.getElementById('product-modal').classList.remove('hidden');
+        }
+
+        window.closeProductModal = function() { document.getElementById('product-modal').classList.add('hidden'); }
+
+        // Avvio ascolto automatico
+        listenToProducts();
+    </script>
+</body>
+</html>
