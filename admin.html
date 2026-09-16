@@ -1,205 +1,122 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velvet Partenope - Gestione Prodotti Cloud</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        velvetRed: '#990000',
-                        velvetDarkRed: '#660000',
-                        velvetGold: '#C5A059',
-                        velvetDark: '#0D0D0D',
-                        velvetGray: '#FAFAFA',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>body { font-family: 'Montserrat', sans-serif; }</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Velvet Partenope</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+    .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h1, h2 { text-align: center; color: #333; }
+    form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+    input, textarea, button { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
+    button { background-color: #28a745; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #218838; }
+    .product-item { border-bottom: 1px solid #eee; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+    .product-info { display: flex; align-items: center; gap: 15px; }
+    .product-info img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
+    .btn-delete { background-color: #dc3545; padding: 5px 10px; font-size: 14px; }
+    .btn-delete:hover { background-color: #c82333; }
+  </style>
 </head>
-<body class="bg-velvetGray text-velvetDark antialiased min-h-screen p-4 sm:p-8">
+<body>
 
-    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl border border-velvetGold/30 overflow-hidden">
-        <div class="bg-velvetDark text-white p-6 flex justify-between items-center border-b border-velvetGold/30">
-            <h1 class="text-xl font-bold tracking-wide"><i class="fa-solid fa-cloud-arrow-up text-velvetGold mr-2"></i> Admin Cloud - Velvet Partenope</h1>
-            <a href="index.html" target="_blank" class="bg-velvetRed hover:bg-velvetDarkRed text-white text-xs font-semibold uppercase px-4 py-2 rounded transition-colors shadow">
-                Vai al Negozio <i class="fa-solid fa-external-link ml-1"></i>
-            </a>
+<div class="container">
+  <h1>Pannello Admin - Velvet Partenope</h1>
+  
+  <form id="productForm">
+    <input type="text" id="productName" placeholder="Nome Prodotto" required>
+    <input type="number" id="productPrice" step="0.01" placeholder="Prezzo (€)" required>
+    <textarea id="productDescription" placeholder="Descrizione Prodotto" rows="3" required></textarea>
+    <input type="url" id="productImageUrl" placeholder="Incolla Link Immagine (es. https://postimages.org/...)" required>
+    <button type="submit" id="btnSubmit">Aggiungi Prodotto</button>
+  </form>
+
+  <h2>Prodotti Inseriti</h2>
+  <div id="productsList">Caricamento prodotti...</div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  // Incolla qui le tue chiavi Firebase se diverse
+  const firebaseConfig = {
+    apiKey: "AIzaSy...",
+    authDomain: "velvetpartenope-d24bf.firebaseapp.com",
+    projectId: "velvetpartenope-d24bf",
+    storageBucket: "velvetpartenope-d24bf.appspot.com",
+    messagingSenderId: "105...",
+    appId: "1:105..."
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const productForm = document.getElementById('productForm');
+  const productsList = document.getElementById('productsList');
+
+  // Inserimento Prodotto
+  productForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('productName').value;
+    const price = parseFloat(document.getElementById('productPrice').value);
+    const description = document.getElementById('productDescription').value;
+    const imageUrl = document.getElementById('productImageUrl').value;
+
+    try {
+      await addDoc(collection(db, "products"), {
+        name: name,
+        price: price,
+        description: description,
+        imageUrl: imageUrl,
+        createdAt: new Date()
+      });
+      alert('Prodotto aggiunto con successo!');
+      productForm.reset();
+    } catch (error) {
+      console.error("Errore aggiunta:", error);
+      alert('Errore durante il salvataggio: ' + error.message);
+    }
+  });
+
+  // Mostra Prodotti in tempo reale
+  onSnapshot(collection(db, "products"), (snapshot) => {
+    productsList.innerHTML = '';
+    if (snapshot.empty) {
+      productsList.innerHTML = '<p style="text-align:center;">Nessun prodotto presente.</p>';
+      return;
+    }
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+      const div = document.createElement('div');
+      div.className = 'product-item';
+      div.innerHTML = `
+        <div class="product-info">
+          <img src="${data.imageUrl}" alt="${data.name}" onerror="this.src='https://via.placeholder.com/50'">
+          <div>
+            <strong>${data.name}</strong> - €${data.price}<br>
+            <small>${data.description}</small>
+          </div>
         </div>
+        <button class="btn-delete" onclick="deleteProduct('${docSnap.id}')">Elimina</button>
+      `;
+      productsList.appendChild(div);
+    });
+  });
 
-        <div class="p-6 sm:p-8">
-            <!-- Form Aggiunta Prodotto -->
-            <form id="product-form" class="bg-velvetGray p-6 rounded-xl border border-velvetGold/30 mb-8 space-y-4">
-                <h2 class="font-bold text-base text-velvetDark mb-2"><i class="fa-solid fa-plus-circle text-velvetRed mr-1"></i> Pubblica Nuovo Prodotto Online</h2>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-gray-600 mb-1">Nome Prodotto</label>
-                        <input type="text" id="p-name" required class="w-full bg-white border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-velvetRed">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-gray-600 mb-1">Categoria</label>
-                        <select id="p-category" class="w-full bg-white border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-velvetRed">
-                            <option value="viso">Viso</option>
-                            <option value="occhi">Occhi</option>
-                            <option value="labbra">Labbra</option>
-                            <option value="trousse">Trousse & Kit</option>
-                        </select>
-                    </div>
-                </div>
+  // Funzione Elimina
+  window.deleteProduct = async function(id) {
+    if (confirm('Vuoi davvero eliminare questo prodotto dal negozio?')) {
+      try {
+        await deleteDoc(doc(db, "products", id));
+        alert('Prodotto eliminato!');
+      } catch (error) {
+        console.error("Errore eliminazione:", error);
+      }
+    }
+  };
+</script>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-gray-600 mb-1">Prezzo (€)</label>
-                        <input type="number" step="0.01" id="p-price" required class="w-full bg-white border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-velvetRed">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-gray-600 mb-1">Immagine dal Dispositivo</label>
-                       <input type="url" id="productImage" placeholder="Incolla URL immagine (es. https://...)" required>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold uppercase text-gray-600 mb-1">Descrizione</label>
-                    <textarea id="p-desc" rows="2" required class="w-full bg-white border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-velvetRed"></textarea>
-                </div>
-
-                <button type="submit" id="submit-btn" class="bg-velvetRed hover:bg-velvetDarkRed text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded transition-colors shadow">
-                    Carica sul Cloud in Tempo Reale
-                </button>
-            </form>
-
-            <!-- Lista Prodotti Cloud -->
-            <h2 class="font-bold text-base text-velvetDark mb-4">Prodotti Attualmente sul Cloud</h2>
-            <div id="admin-product-list" class="space-y-3">
-                <p class="text-gray-400 text-xs">Caricamento elenco...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Firebase Script Admin Tempo Reale -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCwnKJVfJQN6HwbA90uxHd7OI04pKw_AMA",
-            authDomain: "velvetpartenope-d24bf.firebaseapp.com",
-            projectId: "velvetpartenope-d24bf",
-            storageBucket: "velvetpartenope-d24bf.firebasestorage.app",
-            messagingSenderId: "244982903425",
-            appId: "1:244982903425:web:fa110dc59b9a8c05e79380"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-
-        // Ascolto della lista prodotti admin in TEMPO REALE
-        function listenToAdminProducts() {
-            const list = document.getElementById('admin-product-list');
-            const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
-
-            onSnapshot(q, (snapshot) => {
-                if (snapshot.empty) {
-                    list.innerHTML = `<p class="text-gray-500 text-sm">Nessun prodotto online.</p>`;
-                    return;
-                }
-
-                let html = '';
-                snapshot.forEach((documentSnapshot) => {
-                    const p = documentSnapshot.data();
-                    const id = documentSnapshot.id;
-                    html += `
-                        <div class="flex items-center justify-between bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                            <div class="flex items-center gap-4">
-                                <img src="${p.image}" class="w-12 h-12 object-cover rounded border" onerror="this.src='https://placehold.co/50'">
-                                <div>
-                                    <h4 class="font-bold text-sm text-gray-900">${p.name} <span class="text-xs text-velvetRed font-normal uppercase">(${p.category})</span></h4>
-                                    <p class="text-xs text-gray-500">€ ${parseFloat(p.price || 0).toFixed(2)}</p>
-                                </div>
-                            </div>
-                            <button onclick="deleteProduct('${id}', '${p.imagePath || ''}')" class="text-red-500 hover:text-red-700 p-2 text-sm" title="Elimina">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </div>
-                    `;
-                });
-                list.innerHTML = html;
-            }, (err) => {
-                console.error("Errore caricamento lista:", err);
-                list.innerHTML = `<p class="text-red-500 text-xs">Errore nel caricamento della lista prodotti.</p>`;
-            });
-        }
-
-        document.getElementById('product-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            btn.disabled = true;
-            btn.innerText = "Caricamento immagine e dati...";
-
-            try {
-                const fileInput = document.getElementById('p-image-file');
-                const file = fileInput.files[0];
-                
-                if (!file) {
-                    alert('Seleziona un\'immagine.');
-                    btn.disabled = false;
-                    btn.innerText = "Carica sul Cloud in Tempo Reale";
-                    return;
-                }
-
-                const storagePath = `products/${Date.now()}_${file.name}`;
-                const storageRef = ref(storage, storagePath);
-                await uploadBytes(storageRef, file);
-                
-                const downloadURL = await getDownloadURL(storageRef);
-
-                await addDoc(collection(db, "products"), {
-                    name: document.getElementById('p-name').value,
-                    category: document.getElementById('p-category').value,
-                    price: parseFloat(document.getElementById('p-price').value),
-                    image: downloadURL,
-                    imagePath: storagePath,
-                    description: document.getElementById('p-desc').value,
-                    rating: 5.0,
-                    createdAt: Date.now()
-                });
-
-                document.getElementById('product-form').reset();
-                alert('Prodotto e immagine pubblicati online con successo!');
-            } catch (error) {
-                console.error("Errore salvataggio:", error);
-                alert('Errore durante il salvataggio.');
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "Carica sul Cloud in Tempo Reale";
-            }
-        });
-
-        window.deleteProduct = async function(id, imagePath) {
-            if(confirm('Vuoi davvero eliminare questo prodotto dal sito online?')) {
-                try {
-                    if (imagePath) {
-                        const imageRef = ref(storage, imagePath);
-                        await deleteObject(imageRef).catch(() => {});
-                    }
-                    await deleteDoc(doc(db, "products", id));
-                    alert('Prodotto eliminato.');
-                } catch (error) {
-                    console.error("Errore eliminazione:", error);
-                }
-            }
-        }
-
-        listenToAdminProducts();
-    </script>
 </body>
 </html>
