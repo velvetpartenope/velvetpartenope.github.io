@@ -33,13 +33,53 @@
     <style>
         body { font-family: 'Montserrat', sans-serif; }
         h1, h2, h3, .font-serif { font-family: 'Cormorant Garamond', serif; }
+
+        /* Animation Keyframes per "VELVET PARTENOPE STA ARRIVANDO" */
+        @keyframes textGlowShimmer {
+            0% {
+                background-position: 0% 50%;
+                filter: drop-shadow(0 0 2px rgba(197, 160, 89, 0.2));
+            }
+            50% {
+                background-position: 100% 50%;
+                filter: drop-shadow(0 0 12px rgba(229, 197, 133, 0.6));
+            }
+            100% {
+                background-position: 0% 50%;
+                filter: drop-shadow(0 0 2px rgba(197, 160, 89, 0.2));
+            }
+        }
+
+        .animated-text-gold {
+            background: linear-gradient(90deg, #FFFFFF 0%, #C5A059 30%, #E5C585 50%, #C5A059 70%, #FFFFFF 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: textGlowShimmer 4s ease-in-out infinite;
+        }
+
+        /* Banner Work in Progress Subtle Pulse Animation */
+        @keyframes goldGlow {
+            0%, 100% { border-color: rgba(197, 160, 89, 0.4); }
+            50% { border-color: rgba(229, 197, 133, 0.9); }
+        }
+
+        .wip-gold-banner {
+            background: #121212;
+            animation: goldGlow 3s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="bg-white text-velvetDark antialiased selection:bg-velvetRed selection:text-white">
 
     <!-- Top Announcement Bar -->
     <div class="bg-gradient-to-r from-velvetDark via-velvetRed to-velvetDark text-white text-xs py-2.5 px-4 text-center font-medium tracking-wide border-b border-velvetGold/30 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-        <span class="flex items-center gap-1.5"><i class="fa-regular fa-comments text-velvetLightGold"></i> Scrivici sui social per info, disponibilità e ordini!</span>
+        <span class="flex items-center gap-1.5">
+            <i class="fa-solid fa-sparkles text-velvetLightGold"></i> 
+            <strong>CATALOGO IN AGGIORNAMENTO:</strong> Stiamo caricando tantissimi nuovi prodotti!
+        </span>
+        <span class="hidden sm:inline">•</span>
         <div class="flex items-center gap-3">
             <a href="https://www.instagram.com/velvet.partenope?stkn=bHo3bnl4YndsMTVp" target="_blank" class="hover:text-velvetLightGold transition-colors underline underline-offset-4 inline-flex items-center gap-1">
                 <i class="fa-brands fa-instagram"></i> Instagram
@@ -98,20 +138,45 @@
         </div>
     </header>
 
+    <!-- Work in Progress Banner (Sfondo scuro pulito a contrasto elevato) -->
+    <div class="wip-gold-banner text-white py-3.5 px-4 border-y-2 border-velvetGold relative">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left relative z-10">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-velvetRed/30 border border-velvetGold flex items-center justify-center text-velvetLightGold shrink-0 shadow">
+                    <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+                </div>
+                <div>
+                    <div class="flex items-center justify-center sm:justify-start gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block"></span>
+                        <h4 class="font-serif font-bold text-velvetLightGold text-sm tracking-wide">Nuovi Prodotti in Fase di Caricamento</h4>
+                    </div>
+                    <p class="text-xs text-gray-200">Il nostro team sta popolando lo store con tantissimi nuovi articoli beauty. Torna a visitarci spesso per scoprire le novità aggiunte!</p>
+                </div>
+            </div>
+            <a href="https://www.instagram.com/velvet.partenope?stkn=bHo3bnl4YndsMTVp" target="_blank" class="bg-gradient-to-r from-velvetGold via-velvetLightGold to-velvetGold text-velvetDark px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-md shrink-0 inline-flex items-center gap-1.5">
+                <i class="fa-brands fa-instagram text-sm"></i> Scopri gli spoiler su IG
+            </a>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="relative bg-gradient-to-br from-velvetDark via-velvetDarkRed to-black text-white overflow-hidden border-b-2 border-velvetGold">
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32 flex flex-col lg:flex-row items-center justify-between">
             <div class="flex flex-col items-start justify-center max-w-2xl z-10">
-                <span class="bg-velvetGold/20 border border-velvetGold text-velvetLightGold text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest mb-4 shadow">Collezione Esclusiva</span>
-                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-6">
-                    L'Eleganza <span class="text-velvetGold italic">Vellutata</span> del Make-Up
+                <span class="bg-velvetGold/20 border border-velvetGold text-velvetLightGold text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest mb-4 shadow">
+                    ✨ Tante Novità In Arrivo
+                </span>
+                
+                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-6 animated-text-gold uppercase">
+                    VELVET PARTENOPE STA ARRIVANDO
                 </h1>
+
                 <p class="text-gray-200 text-base sm:text-lg max-w-lg mb-8 font-light leading-relaxed">
                     Esprimi la tua unicità con texture pregiate, colori vibranti e formulazioni d'eccellenza.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                     <a href="#catalogo" class="bg-velvetRed hover:bg-velvetDarkRed text-white font-medium px-8 py-3.5 rounded text-center transition-all tracking-wider shadow-lg border border-velvetGold/50">
-                        SCOPRI LA COLLEZIONE
+                        SCOPRI I PRODOTTI
                     </a>
                 </div>
             </div>
